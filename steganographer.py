@@ -1,6 +1,6 @@
 """
 * Author: Chitransh Gaurav
-* Date: 8th October 2016
+* Date: 8th October 2015
 * Title: Steganographer
 * Description: Hides text in images
 """
@@ -53,7 +53,12 @@ def extract(hexstring):
 
 #Method to impress message in the pixels of the image:
 def encrypt(filename, filenamenew, text):
-	img = Image.open(filename)
+	try:
+		img = Image.open(filename)
+	except Exception as err:
+		print str(err)
+		return -1
+	
 	#Adding a marker to indicate end of text 1x15+0 does never occur in alphabetical text
 	encryptingText = str2bin(text) + '1111111111111110'
 	lengthOfStream = len(encryptingText)
@@ -80,7 +85,11 @@ def encrypt(filename, filenamenew, text):
 #Method to extract information out of the image
 
 def decrypt(filename):
-	img = Image.open(filename)
+	try:
+		img = Image.open(filename)
+	except Exception as err:
+		print str(err)
+		return -1
 	decodingText = ''
 	if img.mode == 'RGBA':
 		imgobj = img.getdata()
